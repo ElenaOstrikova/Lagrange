@@ -1,6 +1,3 @@
-import numpy as np
-
-
 def lagrange(xfunc, x, y, n):
     res = 0
 
