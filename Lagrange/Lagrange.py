@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
 
 class Lagrange:
 
@@ -8,8 +10,8 @@ class Lagrange:
         self.right = right
         self.n = n
 
-        self.args = np.linspace(left, right, n + 1)
-        self.values = func(self.args)
+        self.points = np.linspace(left, right, n + 1)
+        self.values = func(self.points)
 
         self.linspace = np.linspace(left, right, 100)
         self.function = func(self.linspace)
@@ -24,18 +26,16 @@ class Lagrange:
             divider = 1
             for j in range(self.n + 1):
                 if i != j:
-                    dividend = dividend * (self.linspace - self.args[j])
-                    divider = divider * (self.args[i] - self.args[j])
+                    dividend = dividend * (self.linspace - self.points[j])
+                    divider = divider * (self.points[i] - self.points[j])
 
             self.polinom = self.polinom + self.values[i] * dividend / divider
 
         self.error = self.function - self.polinom
-
-        # calculate mean squared error
         self.MSE = np.sqrt(((self.function - self.polinom) ** 2).mean())
 
     def plots(self):
-        plt.plot(self.args, self.values, 'ok')
+        plt.plot(self.points, self.values, 'ok')
         plt.plot(self.linspace, self.function, '-b', label=u'f(x)')
         plt.plot(self.linspace, self.polinom, '-r', label=u'L(x)')
         plt.legend()
@@ -44,7 +44,9 @@ class Lagrange:
 
         plt.plot(self.linspace, self.error, '-b')
         plt.title('Absolute error')
+
+        mse = mpatches.Patch(color='red', label='MSE: {}'.format(self.MSE))
+        error = mpatches.Patch(label='Absolute error')
+        plt.legend(handles=[error, mse])
         plt.grid()
         plt.show()
-
-        print('MSE: {}'.format(self.MSE))
