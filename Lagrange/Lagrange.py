@@ -1,35 +1,50 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import Functions as fnc
 
-print("Choose the number of points")
-n = int(input())
-a = 0
-b = 2 * np.pi
+class Lagrange:
 
-# calculate function values
-x = np.linspace(a, b, n + 1)
-y = np.cos(x)
-xfunc = np.linspace(a, b, 100)
-yfunc = np.cos(xfunc)
-ynew = fnc.lagrange(xfunc, x, y, n)
+    def __init__(self, left, right, n, func):
+        self.left = left
+        self.right = right
+        self.n = n
 
-# draw the graph of a function
-plt.plot(x, y, 'ok')
-plt.plot(xfunc, yfunc, '-b', label=u'f(x)')
-plt.plot(xfunc, ynew, '-r', label=u'L(x)')
-plt.legend()
-plt.grid()
-plt.show()
+        self.args = np.linspace(left, right, n + 1)
+        self.values = func(self.args)
 
-# calculate abcolute error
-error = yfunc - ynew
-plt.plot(xfunc, error, '-b')
-plt.title('Absolute error')
-plt.grid()
-plt.show()
+        self.linspace = np.linspace(left, right, 100)
+        self.function = func(self.linspace)
 
-# calculate mean squared error
-MSE = np.sqrt(((yfunc - ynew) ** 2).mean())
-print('MSE:')
-print(MSE)
+        self.polinom = 0
+        self.error = []
+        self.MSE = 0
+
+    def calculate(self):
+        for i in range(self.n + 1):
+            dividend = 1
+            divider = 1
+            for j in range(self.n + 1):
+                if i != j:
+                    dividend = dividend * (self.linspace - self.args[j])
+                    divider = divider * (self.args[i] - self.args[j])
+
+            self.polinom = self.polinom + self.values[i] * dividend / divider
+
+        self.error = self.function - self.polinom
+
+        # calculate mean squared error
+        self.MSE = np.sqrt(((self.function - self.polinom) ** 2).mean())
+
+    def plots(self):
+        plt.plot(self.args, self.values, 'ok')
+        plt.plot(self.linspace, self.function, '-b', label=u'f(x)')
+        plt.plot(self.linspace, self.polinom, '-r', label=u'L(x)')
+        plt.legend()
+        plt.grid()
+        plt.show()
+
+        plt.plot(self.linspace, self.error, '-b')
+        plt.title('Absolute error')
+        plt.grid()
+        plt.show()
+
+        print('MSE: {}'.format(self.MSE))
