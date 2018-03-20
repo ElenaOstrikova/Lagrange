@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import Functions as fnc
 
 class Lagrange:
 
@@ -25,7 +24,7 @@ class Lagrange:
             divider = 1
             for j in range(self.n + 1):
                 if i != j:
-                    dividend = dividend * (self.linspace - self.args[i])
+                    dividend = dividend * (self.linspace - self.args[j])
                     divider = divider * (self.args[i] - self.args[j])
 
             self.polinom = self.polinom + self.values[i] * dividend / divider
@@ -49,13 +48,3 @@ class Lagrange:
         plt.show()
 
         print('MSE: {}'.format(self.MSE))
-
-
-lagrange = Lagrange(0, 2 * np.pi, 10, np.cos)
-lagrange.calculate()
-lagrange.plots()
-
-# print("Choose the number of points")
-# n = int(input())
-# a = 0
-# b = 2 * np.pi
