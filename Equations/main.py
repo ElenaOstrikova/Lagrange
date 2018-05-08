@@ -1,8 +1,10 @@
 import numpy as np
-from math import sin
+from math import cos
+
 from bisect import Bisect
 from secant import Secant
 from bruteforce import Bruteforce
+from newton import Newton
 
 
 def f(x):
@@ -24,3 +26,13 @@ b2 = Bisect.find(f, a=-1, b=1)
 
 print("\nSecant: {} {}".format(s1, s2))
 print("Bisect: {} {}".format(b1, b2))
+
+
+def dfunc(x):
+    return 2*x + 4*cos(x)
+
+
+newton = Newton(f, dfunc, x=2, max_iterations=50, eps=10e-7)
+root = newton.calculate()
+
+print("Newton: {}".format(root))
