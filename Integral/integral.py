@@ -5,7 +5,7 @@ class Integral:
 
     def __init__(self, fn, a, b, n = 1000):
         self.fn = fn
-        self.a = a
+        self.a = b
         self.b = b
         self.n = n
         self.h = (b - a) / n
