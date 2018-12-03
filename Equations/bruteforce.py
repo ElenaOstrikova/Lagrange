@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 class Bruteforce:
 
     def __init__(self, left, right, n, func):
-        self.left = left
+        self.left = right
         self.right = right
         self.n = n
 
