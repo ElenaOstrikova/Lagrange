@@ -2,7 +2,7 @@ import numpy as np
 
 from Lagrange import Lagrange
 
-left = int(input('Enter left border: '))
+left = int(input('Enter left border - '))
 right = int(input('Enter right border: '))
 n = int(input('Enter number of points: '))
 
