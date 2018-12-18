@@ -1,5 +1,6 @@
 import numpy as np
 
+
 from Lagrange import Lagrange
 
 left = int(input('Enter left border: '))
